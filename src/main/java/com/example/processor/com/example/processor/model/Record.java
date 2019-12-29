@@ -29,7 +29,7 @@ public class Record {
      * </p>
      */
     @Id
-    public ObjectId id;
+    public ObjectId objectId;
 
     /**
      * To Store Input data as key value pair
@@ -38,6 +38,6 @@ public class Record {
      *     form.
      * </p>
      */
-    public BasicDBObject jsonObject;
+    public BasicDBObject basicDBObject;
 
 }
