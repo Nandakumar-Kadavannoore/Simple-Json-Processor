@@ -3,7 +3,7 @@
  */
 package com.example.processor.com.example.processor.service;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Interface of ProcessorService.
@@ -70,5 +70,5 @@ public interface ProcessorService {
      *                  response. fields must be equal to key.
      * @return {@link Object}
      */
-    Object getRecordById(String recordId, List<String> fieldList);
+    Object getRecordById(String recordId, Set<String> fieldList);
 }

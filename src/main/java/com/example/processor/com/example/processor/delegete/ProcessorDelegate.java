@@ -3,7 +3,7 @@
  */
 package com.example.processor.com.example.processor.delegete;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * Base Delegate Interface.
@@ -58,14 +58,14 @@ public interface ProcessorDelegate {
      * Used to get record by id and return fields response.
      *  <p>
      *      Get the record that match with record id and
-     *      response field key consists of only input field.
+     *      response field key consists of only input key field.
      *      If empty fieldList as input, then return all
      *      key fields as response.
      *  </p>
      * @param recordId unique id of the record.
-     * @param fieldList list of fields that should return as
-     *                  response. fields must be equal to key.
+     * @param requiredResponseFields list of fields that should return as
+     *                               response. fields must be equal to key.
      * @return {@link Object}
      */
-    Object getRecordById(String recordId, List<String> fieldList);
+    Object getRecordById(String recordId, Set<String> requiredResponseFields);
 }
