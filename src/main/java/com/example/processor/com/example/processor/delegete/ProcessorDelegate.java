@@ -31,7 +31,7 @@ public interface ProcessorDelegate {
      *     Find those records that match with given key value
      *     and delete those records from collection.
      * </p>
-     * @param key Specific key string.
+     * @param key Specific key string of field in Json object.
      * @param value Value associated with key.
      * @return {@link Object}
      */
@@ -49,7 +49,7 @@ public interface ProcessorDelegate {
      *     Will search all records and return those records
      *     having value for any key in json document.
      * </p>
-     * @param value specific value.
+     * @param value specific value to search.
      * @return {@link Object}
      */
     Object getRecordsByValue(String value);
@@ -59,10 +59,10 @@ public interface ProcessorDelegate {
      *  <p>
      *      Get the record that match with record id and
      *      response field key consists of only input key field.
-     *      If empty fieldList as input, then return all
+     *      If empty requiredResponseFields as input, then return all
      *      key fields as response.
      *  </p>
-     * @param recordId unique id of the record.
+     * @param recordId unique id of the record or json object.
      * @param requiredResponseFields list of fields that should return as
      *                               response. fields must be equal to key.
      * @return {@link Object}

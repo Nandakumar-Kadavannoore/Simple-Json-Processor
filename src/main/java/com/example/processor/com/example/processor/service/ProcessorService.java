@@ -34,8 +34,8 @@ public interface ProcessorService {
      *     Find those records that match with given key value
      *     and delete those records from collection.
      * </p>
-     * @param key Specific key string.
-     * @param value Value associated with key.
+     * @param key Specific key string in json object.
+     * @param value Value associated with above key.
      * @return {@link Object}
      */
     Object deleteRecordsByKeyValue(String key, String value);
@@ -52,7 +52,7 @@ public interface ProcessorService {
      *     Will search all records and return those records
      *     having value for any key in json document.
      * </p>
-     * @param value specific value.
+     * @param value specific value of json object.
      * @return {@link Object}
      */
     Object getRecordsByValue(String value);
@@ -65,7 +65,7 @@ public interface ProcessorService {
      *      If empty fieldList as input, then return all
      *      key fields as response.
      *  </p>
-     * @param recordId unique id of the record.
+     * @param recordId unique id of the record or json object.
      * @param fieldList list of fields that should return as
      *                  response. fields must be equal to key.
      * @return {@link Object}

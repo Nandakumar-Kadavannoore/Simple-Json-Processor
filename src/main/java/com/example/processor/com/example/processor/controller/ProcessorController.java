@@ -24,6 +24,9 @@ import java.util.Set;
 @RestController
 public class ProcessorController {
 
+    /**
+     * {@link ProcessorDelegateImpl}
+     */
     @Autowired
     private ProcessorDelegateImpl delegateImpl;
 
@@ -32,7 +35,7 @@ public class ProcessorController {
      * <p>
      *     Used to create a new record.
      * </p>
-     * @param inputData input data in the form of {@link String}
+     * @param inputData input json data in the form of {@link String}
      * @return {@link ResponseEntity}
      */
     @RequestMapping(method = RequestMethod.POST)
@@ -46,7 +49,7 @@ public class ProcessorController {
      * <p>
      *     Used to delete record based on a key value.
      * </p>
-     * @param key key value.
+     * @param key key value of field in json object.
      * @param value value associated with key.
      * @return {@link ResponseEntity}
      */
@@ -90,7 +93,7 @@ public class ProcessorController {
      *  <p>
      *    Used to get records by value.
      *  </p>
-     * @param value Specific unique id of the record.
+     * @param value value to search in each json object.
      * @return {@link ResponseEntity}
      */
     @RequestMapping(value = "/record/value/{value}", method = RequestMethod.GET)
@@ -111,6 +114,7 @@ public class ProcessorController {
      *    returned.
      *  </p>
      * @param recordId Specific unique id of the record.
+     * @param requiredResponseFields required response fields from json object.
      * @return {@link ResponseEntity}
      */
     @RequestMapping(value = "/{recordId}", method = RequestMethod.GET)

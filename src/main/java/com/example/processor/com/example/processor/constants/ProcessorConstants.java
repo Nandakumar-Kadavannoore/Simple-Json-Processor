@@ -20,7 +20,7 @@ public  class ProcessorConstants {
     public static final String FAILURE_RESPONSE_MESSAGE = "Failure";
 
     /**
-     * Constant to store record unique id.
+     * Constant to store record unique id key.
      */
     public static final String RECORD_UNIQUE_ID_KEY = "_id";
 
