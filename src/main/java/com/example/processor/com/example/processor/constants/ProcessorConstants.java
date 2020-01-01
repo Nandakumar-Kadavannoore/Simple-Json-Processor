@@ -23,4 +23,14 @@ public  class ProcessorConstants {
      * Constant to store record unique id.
      */
     public static final String RECORD_UNIQUE_ID_KEY = "_id";
+
+    /**
+     * Constant to store database file name.
+     */
+    public static final String DATABASE_FILE_NAME = "database";
+
+    /**
+     * Constant to store temporary file name.
+     */
+    public static final String TEMPORARY_FILE_NAME = "temporary.storage";
 }
