@@ -85,6 +85,21 @@ public class Utility {
     }
 
     /**
+     * Method to configure database before processing.
+     */
+    public void configDatabase() {
+        try {
+            File source = new File(getClass().getClassLoader().getResource(ProcessorConstants.DATABASE_FILE_NAME).getFile());
+            FileWriter fileWriter = new FileWriter(source);
+            // Add special character to make Json objects inside json array.
+            fileWriter.append("[");
+            fileWriter.close();
+        } catch (Exception ex) {
+
+        }
+    }
+
+    /**
      * This method is used to write a record.
      * @param inputJsonString input Json string data.
      * @return Added record as string.
