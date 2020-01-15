@@ -3,6 +3,7 @@
  */
 package com.example.processor.com.example.processor.controller;
 
+import com.example.processor.com.example.processor.constants.ProcessorConstants;
 import com.example.processor.com.example.processor.delegate.impl.ProcessorDelegateImpl;
 import com.example.processor.com.example.processor.model.ResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,10 @@ public class ProcessorController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addRecord(@RequestBody String inputData) {
        ResponseModel responseModel = (ResponseModel) delegateImpl.addRecord(inputData);
-       return new ResponseEntity<>(responseModel, HttpStatus.CREATED);
+       if (responseModel.getMessage().equalsIgnoreCase(ProcessorConstants.SUCCESS_RESPONSE_MESSAGE))
+           return new ResponseEntity<>(responseModel, HttpStatus.CREATED);
+       else
+           return new ResponseEntity<>(responseModel, HttpStatus.OK);
     }
 
     /**

@@ -9,6 +9,10 @@ package com.example.processor.com.example.processor.constants;
  */
 public  class ProcessorConstants {
 
+    private ProcessorConstants() {
+      // To prevent object creation.
+    }
+
     /**
      * Constant to store Success response message.
      */

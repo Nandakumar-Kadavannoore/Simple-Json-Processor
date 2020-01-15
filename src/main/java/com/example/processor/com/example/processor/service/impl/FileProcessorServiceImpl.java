@@ -202,7 +202,6 @@ public class FileProcessorServiceImpl implements ProcessorService {
                         jsonObject.get(ProcessorConstants.RECORD_UNIQUE_ID_KEY).toString()
                                 .equalsIgnoreCase(recordId)) {
                     requiredJsonObject =  jsonObject;
-                    continue;
                 }
             }
 
@@ -229,7 +228,7 @@ public class FileProcessorServiceImpl implements ProcessorService {
     private ResponseModel getResponseObjectWithRequiredFields(
             JSONObject requiredJsonObject, Set<String> requiredResponseFields) {
 
-            JSONObject responseJsonObject = new JSONObject();
+            JSONObject responseJsonObject;
             Set<String> keysInEachJSONObject = requiredJsonObject.keySet();
             JSONObject  jsonObject = new JSONObject();
             /* Compare response fields with Json Object keys if
