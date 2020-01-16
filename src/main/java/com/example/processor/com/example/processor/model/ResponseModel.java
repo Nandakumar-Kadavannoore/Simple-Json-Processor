@@ -5,6 +5,7 @@ package com.example.processor.com.example.processor.model;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 
 /**
  * Model class for response.
@@ -15,6 +16,7 @@ import lombok.Data;
  */
 @Data
 @Builder
+@ToString
 public class ResponseModel {
 
     /**
