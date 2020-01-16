@@ -37,4 +37,39 @@ public  class ProcessorConstants {
      * Constant to store temporary file name.
      */
     public static final String TEMPORARY_FILE_NAME = "temporary.storage";
+
+    /**
+     * Constant to store record add key.
+     */
+    public static final String ADD_RECORD = "ADD";
+
+    /**
+     * Constant to store Get all records key.
+     */
+    public static final String GET_ALL_RECORDS = "GET_ALL";
+
+    /**
+     * Constant to store Get record by id key.
+     */
+    public static final String GET_RECORD_BY_ID = "GET_BY_ID";
+
+    /**
+     * Constant to store Delete record by id key.
+     */
+    public static final String DELETE_RECORD_BY_ID = "DELETE_BY_ID";
+
+    /**
+     * Constant to store Get Record By value key.
+     */
+    public static final String GET_RECORD_BY_VALUE = "GET_by_VALUE";
+
+    /**
+     * Constant to store Delete record by key value key.
+     */
+    public static final String DELETE_RECORD_BY_KEY_VALUE = "DELETE_RECORD_BY_KEY_VALUE";
+
+    /**
+     * Constant to store Initialize database key.
+     */
+    public static final String INITIALIZE_DATABASE = "INITIALIZE";
 }

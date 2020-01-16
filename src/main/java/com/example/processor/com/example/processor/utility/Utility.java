@@ -8,6 +8,7 @@ import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileReader;
@@ -19,13 +20,14 @@ import java.util.UUID;
 /**
  * Utility services to write and read from database file.
  */
+@Component
 public class Utility {
 
     /**
      * The method create a temporary file that acts as cache.
      * @throws Exception
      */
-    private  void createCacheFile() throws  Exception{
+    public   void createCacheFile() throws  Exception{
             // Copy contents from source to destination file.
             File source = new File(getClass().getClassLoader().getResource(ProcessorConstants.DATABASE_FILE_NAME).getFile());
             File dest = new File(getClass().getClassLoader().getResource(ProcessorConstants.TEMPORARY_FILE_NAME).getFile());
@@ -43,7 +45,7 @@ public class Utility {
      * @return {@link JSONArray}
      * @throws Exception
      */
-    public  JSONArray readDataFromCacheFile() throws  Exception{
+    public   JSONArray readDataFromCacheFile() throws  Exception{
            createCacheFile();
            JSONArray jsonArray = null;
            File dest = new File(getClass().getClassLoader().getResource(ProcessorConstants.TEMPORARY_FILE_NAME).getFile());
@@ -59,7 +61,7 @@ public class Utility {
     /**
      * This method is used to delete content from temporary file.
      */
-    private void deleteContentFromCache() throws Exception{
+    public void deleteContentFromCache() throws Exception{
            File temporaryFile = new File(getClass().getClassLoader().getResource(ProcessorConstants.TEMPORARY_FILE_NAME).getFile());
            PrintWriter writer = new PrintWriter(temporaryFile);
            writer.print("");
@@ -116,6 +118,8 @@ public class Utility {
         jsonObject.put(ProcessorConstants.RECORD_UNIQUE_ID_KEY, UUID.randomUUID().toString());
         response = jsonObject.toString();
         FileWriter fileWriter = new FileWriter(file, true);
+        if (file.length() != 0)
+            fileWriter.write(",");
         fileWriter.write(jsonObject.toString());
         fileWriter.close();
         return response;

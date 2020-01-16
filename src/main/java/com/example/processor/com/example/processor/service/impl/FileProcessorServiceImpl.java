@@ -9,6 +9,7 @@ import com.example.processor.com.example.processor.service.ProcessorService;
 import com.example.processor.com.example.processor.utility.Utility;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -25,6 +26,12 @@ import java.util.*;
 public class FileProcessorServiceImpl implements ProcessorService {
 
     /**
+     * {@link Utility}.
+     */
+    @Autowired
+    private Utility utility;
+
+    /**
      * {@link ProcessorService}
      *
      * @param inputJsonString input json object in form of string.
@@ -35,7 +42,7 @@ public class FileProcessorServiceImpl implements ProcessorService {
 
         String response;
         try {
-            response = new Utility().writeRecordToDatabase(inputJsonString);
+            response = utility.writeRecordToDatabase(inputJsonString);
         } catch (Exception exception) {
             return ResponseModel
                     .builder()
@@ -71,7 +78,7 @@ public class FileProcessorServiceImpl implements ProcessorService {
      */
     public ResponseModel deleteByKeyValue(String key, String value) {
         try {
-            JSONArray jsonArray = new Utility().readDataFromCacheFile();
+            JSONArray jsonArray = utility.readDataFromCacheFile();
             deleteRecordsFromDatabase(jsonArray, key, value);
         } catch (Exception ex) {
             return ResponseModel
@@ -114,7 +121,7 @@ public class FileProcessorServiceImpl implements ProcessorService {
                 }
             });
             // Utility method to save records back to database file.
-            new Utility().writeToDatabase(jsonObjects);
+            utility.writeToDatabase(jsonObjects);
         }
     }
 
@@ -126,7 +133,7 @@ public class FileProcessorServiceImpl implements ProcessorService {
 
         List<JSONObject> jsonObjects = new ArrayList<>();
         try {
-            JSONArray jsonArray = new Utility().readDataFromCacheFile();
+            JSONArray jsonArray = utility.readDataFromCacheFile();
             if (Optional.ofNullable(jsonArray).isPresent()) {
                 // Iterate through each json objects and to response list.
                 jsonArray.forEach( eachJSONObject -> {
@@ -194,7 +201,7 @@ public class FileProcessorServiceImpl implements ProcessorService {
         JSONObject requiredJsonObject = new JSONObject();
         try {
             // Read data from database.
-            JSONArray jsonArray = new Utility().readDataFromCacheFile();
+            JSONArray jsonArray = utility.readDataFromCacheFile();
             for (Object eachJSONObject: jsonArray) {
                 JSONObject jsonObject = (JSONObject) eachJSONObject;
                 // Check if each Json Object matches with given id if yes assign to response and exist loop.
@@ -261,7 +268,7 @@ public class FileProcessorServiceImpl implements ProcessorService {
         List<JSONObject> responseJSONObjects = new ArrayList<>();
         try {
             // Get all records from database.
-            JSONArray jsonArray =  new Utility().readDataFromCacheFile();
+            JSONArray jsonArray =  utility.readDataFromCacheFile();
             if (Optional.ofNullable(jsonArray).isPresent()) {
                 // Iterate through each Json object to check if requested value exist or not.
                 jsonArray.stream().forEach( eachJSONObject -> {
