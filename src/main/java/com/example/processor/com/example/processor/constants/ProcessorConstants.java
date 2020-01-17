@@ -72,4 +72,9 @@ public  class ProcessorConstants {
      * Constant to store Initialize database key.
      */
     public static final String INITIALIZE_DATABASE = "INITIALIZE";
+
+    /**
+     * Constant to store invalid input parameter response message.
+     */
+    public static final String INVALID_INPUT_PARAMETER = "Invalid Input parameter";
 }

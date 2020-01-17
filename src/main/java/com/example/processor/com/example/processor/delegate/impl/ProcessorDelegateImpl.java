@@ -3,8 +3,11 @@
  */
 package com.example.processor.com.example.processor.delegate.impl;
 
+import com.example.processor.com.example.processor.constants.ProcessorConstants;
 import com.example.processor.com.example.processor.delegete.ProcessorDelegate;
+import com.example.processor.com.example.processor.model.ResponseModel;
 import com.example.processor.com.example.processor.service.ProcessorService;
+import com.example.processor.com.example.processor.utility.Utility;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,10 +26,23 @@ public class ProcessorDelegateImpl implements ProcessorDelegate {
     private ProcessorService processorService;
 
     /**
+     * {@link Utility}.
+     */
+    @Autowired
+    private Utility utility;
+
+    /**
      * {@link ProcessorDelegate}
      */
     @Override
     public Object addRecord(String inputData) {
+
+        if (utility.isInvalidInputParameter(inputData)) {
+            return ResponseModel
+                    .builder()
+                    .message(ProcessorConstants.INVALID_INPUT_PARAMETER)
+                    .build();
+        }
         return processorService.addRecord(inputData);
     }
 
@@ -35,6 +51,14 @@ public class ProcessorDelegateImpl implements ProcessorDelegate {
      */
     @Override
     public Object deleteRecord(String recordId) {
+
+        if (utility.isInvalidInputParameter(recordId)) {
+            return ResponseModel
+                    .builder()
+                    .message(ProcessorConstants.INVALID_INPUT_PARAMETER)
+                    .build();
+        }
+
         return processorService.deleteRecord(recordId);
     }
 
@@ -43,6 +67,14 @@ public class ProcessorDelegateImpl implements ProcessorDelegate {
      */
     @Override
     public Object deleteRecordsByKeyValue(String key, String value) {
+
+        if (utility.isInvalidInputParameter(key) || utility.isInvalidInputParameter(value)) {
+            return ResponseModel
+                    .builder()
+                    .message(ProcessorConstants.INVALID_INPUT_PARAMETER)
+                    .build();
+        }
+
         return processorService.deleteRecordsByKeyValue(key, value);
     }
 
@@ -59,6 +91,14 @@ public class ProcessorDelegateImpl implements ProcessorDelegate {
      */
     @Override
     public Object getRecordsByValue(String value) {
+
+        if (utility.isInvalidInputParameter(value)) {
+            return ResponseModel
+                    .builder()
+                    .message(ProcessorConstants.INVALID_INPUT_PARAMETER)
+                    .build();
+        }
+
         return processorService.getRecordsByValue(value);
     }
 
@@ -67,6 +107,14 @@ public class ProcessorDelegateImpl implements ProcessorDelegate {
      */
     @Override
     public Object getRecordById(String recordId, Set<String> requiredResponseFields) {
+
+        if (utility.isInvalidInputParameter(recordId)) {
+            return ResponseModel
+                    .builder()
+                    .message(ProcessorConstants.INVALID_INPUT_PARAMETER)
+                    .build();
+        }
+
         return processorService.getRecordById(recordId, requiredResponseFields);
     }
 }

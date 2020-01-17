@@ -10,6 +10,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.io.FileReader;
@@ -124,6 +125,19 @@ public class Utility {
             fileWriter.write(jsonObject.toString());
         }
         return response;
+    }
+
+    /**
+     * Method to validate input parameter.
+     * <p>
+     *     The validation to check if input string empty
+     *     or null.
+     * </p>
+     * @param inputValue input value string.
+     * @return true, if input parameter is Invalid one.
+     */
+    public boolean isInvalidInputParameter(String inputValue) {
+        return (StringUtils.isEmpty(inputValue));
     }
 
 }
