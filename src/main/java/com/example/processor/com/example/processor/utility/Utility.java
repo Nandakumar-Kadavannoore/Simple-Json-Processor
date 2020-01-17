@@ -8,11 +8,13 @@ import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.UUID;
@@ -27,17 +29,17 @@ public class Utility {
      * The method create a temporary file that acts as cache.
      * @throws Exception
      */
-    public   void createCacheFile() throws  Exception{
+    public   void createCacheFile() throws IOException {
             // Copy contents from source to destination file.
             File source = new File(getClass().getClassLoader().getResource(ProcessorConstants.DATABASE_FILE_NAME).getFile());
             File dest = new File(getClass().getClassLoader().getResource(ProcessorConstants.TEMPORARY_FILE_NAME).getFile());
             if (!dest.exists())
                 dest.createNewFile();
             FileUtils.copyFile(source, dest);
-            FileWriter fileWriter = new FileWriter(dest, true);
-            // Add special character to make Json objects inside json array.
-            fileWriter.append("]");
-            fileWriter.close();
+            try (FileWriter fileWriter = new FileWriter(dest, true)) {
+                // Add special character to make Json objects inside json array.
+                fileWriter.append("]");
+            }
     }
 
     /**
@@ -45,7 +47,7 @@ public class Utility {
      * @return {@link JSONArray}
      * @throws Exception
      */
-    public   JSONArray readDataFromCacheFile() throws  Exception{
+    public JSONArray readDataFromCacheFile() throws IOException, ParseException {
            createCacheFile();
            JSONArray jsonArray = null;
            File dest = new File(getClass().getClassLoader().getResource(ProcessorConstants.TEMPORARY_FILE_NAME).getFile());
@@ -61,7 +63,7 @@ public class Utility {
     /**
      * This method is used to delete content from temporary file.
      */
-    public void deleteContentFromCache() throws Exception{
+    public void deleteContentFromCache() throws IOException{
            File temporaryFile = new File(getClass().getClassLoader().getResource(ProcessorConstants.TEMPORARY_FILE_NAME).getFile());
            PrintWriter writer = new PrintWriter(temporaryFile);
            writer.print("");
@@ -73,17 +75,17 @@ public class Utility {
      * @param jsonObjects List of {@link JSONObject}
      * @throws Exception
      */
-    public void writeToDatabase(List<JSONObject> jsonObjects) throws Exception{
+    public void writeToDatabase(List<JSONObject> jsonObjects) throws IOException{
 
             File source = new File(getClass().getClassLoader().getResource(ProcessorConstants.DATABASE_FILE_NAME).getFile());
-            FileWriter fileWriter = new FileWriter(source);
-            // Add special character to make Json objects inside json array.
-            fileWriter.append("[");
+            try(FileWriter fileWriter = new FileWriter(source)) {
+                // Add special character to make Json objects inside json array.
+                fileWriter.append("[");
 
-            for (JSONObject each : jsonObjects) {
-                fileWriter.append(each.toString());
+                for (JSONObject each : jsonObjects) {
+                    fileWriter.append(each.toString());
+                }
             }
-            fileWriter.close();
     }
 
     /**
@@ -92,12 +94,11 @@ public class Utility {
     public void configDatabase() {
         try {
             File source = new File(getClass().getClassLoader().getResource(ProcessorConstants.DATABASE_FILE_NAME).getFile());
-            FileWriter fileWriter = new FileWriter(source);
+            try(FileWriter fileWriter = new FileWriter(source)) {
             // Add special character to make Json objects inside json array.
-            fileWriter.append("[");
-            fileWriter.close();
+            fileWriter.append("["); }
         } catch (Exception ex) {
-
+           // Do nothing
         }
     }
 
@@ -107,7 +108,7 @@ public class Utility {
      * @return Added record as string.
      * @throws Exception
      */
-    public String writeRecordToDatabase(String inputJsonString) throws Exception {
+    public String writeRecordToDatabase(String inputJsonString) throws IOException, ParseException {
         String response;
         File file = new File(getClass().getClassLoader().getResource(ProcessorConstants.DATABASE_FILE_NAME).getFile());
         if (!file.exists())
@@ -117,11 +118,11 @@ public class Utility {
         // Create unique key for each record.
         jsonObject.put(ProcessorConstants.RECORD_UNIQUE_ID_KEY, UUID.randomUUID().toString());
         response = jsonObject.toString();
-        FileWriter fileWriter = new FileWriter(file, true);
-        if (file.length() != 0)
-            fileWriter.write(",");
-        fileWriter.write(jsonObject.toString());
-        fileWriter.close();
+        try(FileWriter fileWriter = new FileWriter(file, true)) {
+            if (file.length() != 0)
+                fileWriter.write(",");
+            fileWriter.write(jsonObject.toString());
+        }
         return response;
     }
 

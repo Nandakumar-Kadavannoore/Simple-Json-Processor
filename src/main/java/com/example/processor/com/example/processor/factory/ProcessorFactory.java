@@ -88,6 +88,7 @@ public class ProcessorFactory {
             case ProcessorConstants.INITIALIZE_DATABASE :
                 utility.configDatabase();
                 break;
+                default: // do nothing.
         }
         return responseObject;
     }
