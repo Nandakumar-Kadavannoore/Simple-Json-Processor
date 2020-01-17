@@ -48,7 +48,22 @@ class FileProcessorApplicationTests {
 				"}");
 		ResponseModel responseModel = (ResponseModel) responseEntity.getBody();
 		Assert.assertEquals(ProcessorConstants.SUCCESS_RESPONSE_MESSAGE, responseModel.getMessage());
-		Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.CREATED);
+		Assert.assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+	}
+
+	@Test
+	@DisplayName("Test Add Invalid Record")
+	void addRecord_InvalidValues() throws Exception{
+		ResponseEntity responseEntity = processorController.addRecord("{\n" +
+				"\t \n" +
+				"\"name\": \"Liam\",\n" +
+				"   \"cat\",\n" +
+				"    \"breed\": \"tabby\"\n" +
+				"\n" +
+				"}");
+		ResponseModel responseModel = (ResponseModel) responseEntity.getBody();
+		Assert.assertEquals(ProcessorConstants.FAILURE_RESPONSE_MESSAGE, responseModel.getMessage());
+		Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 
 	@Test
@@ -58,7 +73,7 @@ class FileProcessorApplicationTests {
 		ResponseEntity responseEntity = processorController.getAllRecords();
 		ResponseModel responseModel = (ResponseModel) responseEntity.getBody();
 		Assert.assertEquals(ProcessorConstants.SUCCESS_RESPONSE_MESSAGE, responseModel.getMessage());
-		Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+		Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 
 	@Test
@@ -68,7 +83,7 @@ class FileProcessorApplicationTests {
 		ResponseEntity responseEntity = processorController.getRecordsByValue("cat");
 		ResponseModel responseModel = (ResponseModel) responseEntity.getBody();
 		Assert.assertEquals(ProcessorConstants.SUCCESS_RESPONSE_MESSAGE, responseModel.getMessage());
-		Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+		Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 
 	@Test
@@ -78,7 +93,7 @@ class FileProcessorApplicationTests {
 		ResponseEntity responseEntity = processorController.deleteRecordsByKeyValue("season", "winter");
 		ResponseModel responseModel = (ResponseModel) responseEntity.getBody();
 		Assert.assertEquals(ProcessorConstants.SUCCESS_RESPONSE_MESSAGE, responseModel.getMessage());
-		Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+		Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 
 	@Test
@@ -88,7 +103,7 @@ class FileProcessorApplicationTests {
 		ResponseEntity responseEntity = processorController.deleteRecordById("id");
 		ResponseModel responseModel = (ResponseModel) responseEntity.getBody();
 		Assert.assertEquals(ProcessorConstants.SUCCESS_RESPONSE_MESSAGE, responseModel.getMessage());
-		Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+		Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 
 	@Test
@@ -98,7 +113,7 @@ class FileProcessorApplicationTests {
 		ResponseEntity responseEntity = processorController.getRecordsById("id", null);
 		ResponseModel responseModel = (ResponseModel) responseEntity.getBody();
 		Assert.assertEquals(ProcessorConstants.SUCCESS_RESPONSE_MESSAGE, responseModel.getMessage());
-		Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+		Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 
 	@Test
@@ -109,7 +124,7 @@ class FileProcessorApplicationTests {
 		ResponseEntity responseEntity = processorController.getRecordsById("ffe7ada6-7e0f-4144-a69a-d9cfe512e21a", requiredResponseFields);
 		ResponseModel responseModel = (ResponseModel) responseEntity.getBody();
 		Assert.assertEquals(ProcessorConstants.SUCCESS_RESPONSE_MESSAGE, responseModel.getMessage());
-		Assert.assertEquals(responseEntity.getStatusCode(), HttpStatus.OK);
+		Assert.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
 	}
 
 }
