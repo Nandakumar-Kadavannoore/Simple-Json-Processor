@@ -78,17 +78,17 @@ public class Utility {
      * @param jsonObjects List of {@link JSONObject}
      * @throws Exception
      */
-    public void writeToDatabase(List<JSONObject> jsonObjects) throws IOException{
+    public void writeToDatabase(List<JSONObject> jsonObjects) throws Exception{
+        // Clear database completely
+        File temporaryFile = new File(getClass().getClassLoader().getResource(ProcessorConstants.DATABASE_FILE_NAME).getFile());
+        PrintWriter writer = new PrintWriter(temporaryFile);
+        writer.print("");
+        writer.close();
+        // Add to file by each json object
+        for (JSONObject jsonObject: jsonObjects) {
+            writeRecordToDatabase(jsonObject.toJSONString(), true);
+        }
 
-            File source = new File(getClass().getClassLoader().getResource(ProcessorConstants.DATABASE_FILE_NAME).getFile());
-            try(FileWriter fileWriter = new FileWriter(source)) {
-                // Add special character to make Json objects inside json array.
-                fileWriter.append("[");
-
-                for (JSONObject each : jsonObjects) {
-                    fileWriter.append(each.toString());
-                }
-            }
     }
 
     /**
@@ -111,7 +111,7 @@ public class Utility {
      * @return Added record as string.
      * @throws Exception
      */
-    public String writeRecordToDatabase(String inputJsonString) throws IOException, ParseException {
+    public String writeRecordToDatabase(String inputJsonString, boolean isExistingData) throws IOException, ParseException {
         String response;
         File file = new File(getClass().getClassLoader().getResource(ProcessorConstants.DATABASE_FILE_NAME).getFile());
         if (!file.exists())
@@ -124,8 +124,10 @@ public class Utility {
         }
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject) parser.parse(inputJsonString);
-        // Create unique key for each record.
-        jsonObject.put(ProcessorConstants.RECORD_UNIQUE_ID_KEY, UUID.randomUUID().toString());
+        if (!isExistingData) {
+            // Create unique key for each record.
+            jsonObject.put(ProcessorConstants.RECORD_UNIQUE_ID_KEY, UUID.randomUUID().toString());
+        }
         response = jsonObject.toString();
         try(FileWriter fileWriter = new FileWriter(file, true)) {
             // No separation of json object if this is first record.

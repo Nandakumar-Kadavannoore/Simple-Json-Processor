@@ -42,7 +42,7 @@ public class FileProcessorServiceImpl implements ProcessorService {
 
         String response;
         try {
-            response = utility.writeRecordToDatabase(inputJsonString);
+            response = utility.writeRecordToDatabase(inputJsonString, false);
         } catch (Exception exception) {
             return ResponseModel
                     .builder()
