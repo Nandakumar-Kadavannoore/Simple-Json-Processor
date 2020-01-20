@@ -37,9 +37,11 @@ public class Utility {
             if (!dest.exists())
                 dest.createNewFile();
             FileUtils.copyFile(source, dest);
-            try (FileWriter fileWriter = new FileWriter(dest, true)) {
-                // Add special character to make Json objects inside json array.
-                fileWriter.append("]");
+            if (dest.length() > 2) {
+                try (FileWriter fileWriter = new FileWriter(dest, true)) {
+                    // Add special character to make Json objects inside json array.
+                    fileWriter.append("]");
+                }
             }
     }
 
@@ -114,14 +116,22 @@ public class Utility {
         File file = new File(getClass().getClassLoader().getResource(ProcessorConstants.DATABASE_FILE_NAME).getFile());
         if (!file.exists())
             file.createNewFile();
+        // Add special character to make Json objects inside json array.
+        if (file.length() == 0) {
+            try(FileWriter fileWriter = new FileWriter(file, true)) {
+                    fileWriter.write("[");
+            }
+        }
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject) parser.parse(inputJsonString);
         // Create unique key for each record.
         jsonObject.put(ProcessorConstants.RECORD_UNIQUE_ID_KEY, UUID.randomUUID().toString());
         response = jsonObject.toString();
         try(FileWriter fileWriter = new FileWriter(file, true)) {
-            if (file.length() != 0)
+            // No separation of json object if this is first record.
+            if (file.length() != 1 && file.length() > 4) {
                 fileWriter.write(",");
+            }
             fileWriter.write(jsonObject.toString());
         }
         return response;

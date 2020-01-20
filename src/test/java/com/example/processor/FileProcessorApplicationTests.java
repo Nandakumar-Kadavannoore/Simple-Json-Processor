@@ -8,8 +8,10 @@ import com.example.processor.com.example.processor.controller.ProcessorControlle
 import com.example.processor.com.example.processor.model.ResponseModel;
 import org.junit.Assert;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,7 @@ import java.util.stream.Stream;
  * Integration Test cases for file based processor.
  */
 @SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class FileProcessorApplicationTests {
 
 	/**

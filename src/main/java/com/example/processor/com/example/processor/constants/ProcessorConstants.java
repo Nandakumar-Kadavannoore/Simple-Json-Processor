@@ -61,7 +61,7 @@ public  class ProcessorConstants {
     /**
      * Constant to store Get Record By value key.
      */
-    public static final String GET_RECORD_BY_VALUE = "GET_by_VALUE";
+    public static final String GET_RECORD_BY_VALUE = "GET_BY_VALUE";
 
     /**
      * Constant to store Delete record by key value key.
