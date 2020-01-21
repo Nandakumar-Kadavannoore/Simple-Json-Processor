@@ -202,16 +202,17 @@ public class FileProcessorServiceImpl implements ProcessorService {
         try {
             // Read data from database.
             JSONArray jsonArray = utility.readDataFromCacheFile();
-            for (Object eachJSONObject: jsonArray) {
-                JSONObject jsonObject = (JSONObject) eachJSONObject;
-                // Check if each Json Object matches with given id if yes assign to response and exist loop.
-                if (jsonObject.containsKey(ProcessorConstants.RECORD_UNIQUE_ID_KEY) &&
-                        jsonObject.get(ProcessorConstants.RECORD_UNIQUE_ID_KEY).toString()
-                                .equalsIgnoreCase(recordId)) {
-                    requiredJsonObject =  jsonObject;
+            if (Optional.ofNullable(jsonArray).isPresent()) {
+                for (Object eachJSONObject : jsonArray) {
+                    JSONObject jsonObject = (JSONObject) eachJSONObject;
+                    // Check if each Json Object matches with given id if yes assign to response and exist loop.
+                    if (jsonObject.containsKey(ProcessorConstants.RECORD_UNIQUE_ID_KEY) &&
+                            jsonObject.get(ProcessorConstants.RECORD_UNIQUE_ID_KEY).toString()
+                                    .equalsIgnoreCase(recordId)) {
+                        requiredJsonObject = jsonObject;
+                    }
                 }
             }
-
         } catch (Exception ex) {
             return ResponseModel
                     .builder()
